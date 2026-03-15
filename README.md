@@ -9,6 +9,7 @@ Spaced repetition algorithms like FSRS in Anki can adjust its parameters to suit
 
 
 This program tries to fix this issue by doing the following:
+
 1. modifying the decay constant in FSRS-5 to decrease forgetting curve speed by E% 
 IMAGE
     - E represents the "effectiveness" of the user's encoding/study techniques. Research indicates that utilizing higher-order learning techniques that emphasize understanding relationships between concepts rather than isolated lower-order learning, such as interleaving and mind mapping (Lafleur and Kanazawa; Batdi; Firth et al.), can improve retention and reduce the decay rate of the forgetting curve.
@@ -18,6 +19,7 @@ IMAGE of Bloom's taxonomy and caption
     - the program does this by calculating error margins (how much the intervals deviate) between the original and modified algorithms for specific grade sequences
 
 There is also a secondary visualizer program that outputs exact review intervals, calculates the % time the E-value saved, and graphs the forgetting curves of both algorithms.
+
 
 
 ## How I collected the data for my spreadsheet, graphs, etc
@@ -31,9 +33,11 @@ so in total 450 combinations
 IMAGE
 
 
+
 ## Project Screenshots
 IMAGE
 IMAGE
+
 
 
 ## Results
@@ -44,6 +48,7 @@ IMAGE
 4. Error margins and matched retention were mostly consistent no matter what sequence was used to match the algorithms (see figure 15).
 5. Rough estimates of E-value to desired retention decrease on figure 16.
 IMAGE
+
 
 **Why was there more deviation as desired retention decreased, and as E increased?**
 
@@ -57,6 +62,7 @@ But when E=100, for r = 0.9, r^-4 ~ 1.52; for r = 0.8, r^-4 ~ 2.44.
 r is approximately 2.79 times more sensitive when E=100.
 
 This relationship also explains why E saved more time for lower desired retentions and less for higher desired retentions. 
+
 
 
 ## Conclusion (and future implications with FSRS-6)
