@@ -66,13 +66,14 @@ This relationship also explains why E saved more time for lower desired retentio
 
 
 ## Conclusion (and future implications with FSRS-6)
-- Because there was minimal deviation between the modified FSRS-5 algorithm and the matched unmodified FSRS-5 algorithm under optimal conditions, this suggests that this is an **accurate approach** to account for higher-order learning in FSRS-5 without modifying the core algorithm.
-    - The low standard deviation between matched retention and error margins suggests there is a clear way to convert the modified FSRS-5 with E to the unmodified FSRS-5 with lower retention.
-    - This conversion is not completely perfect, since lowering desired retention would make certain long intervals much longer when trying to match the modified algorithm with its best unmodified equivalent.
-    - E-value matching is best suited when E causes a low relative decrease and when the user desires a higher retention, from 85% to 95%.
-    - Intervals within the modified algorithm were reasonable, saved time, and had low relative decreases for most E-values, indicating that this would be helpful for a student utilizing higher-order learning techniques to save time.
-    - The biggest limitation of this approach, though, is that E has to be estimated. There are no known or mathematically proven E-values for specific higher-order and lower-order study methods. But as long as this approach is used with optimal conditions, this can be helpful with minimal risk.
-- Because FSRS-6 now optimizes the user's forgetting curve, this is **no longer an effective approach**. **However, the issue of deciding what desired retention a user should use persists.**
+Because there was minimal deviation between the modified FSRS-5 algorithm and the matched unmodified FSRS-5 algorithm under optimal conditions, this suggests that this is an **accurate approach** to account for higher-order learning in FSRS-5 without modifying the core algorithm.
+- The low standard deviation between matched retention and error margins suggests there is a clear way to convert the modified FSRS-5 with E to the unmodified FSRS-5 with lower retention.
+- This conversion is not completely perfect, since lowering desired retention would make certain long intervals much longer when trying to match the modified algorithm with its best unmodified equivalent.
+- E-value matching is best suited when E causes a low relative decrease and when the user desires a higher retention, from 85% to 95%.
+- Intervals within the modified algorithm were reasonable, saved time, and had low relative decreases for most E-values, indicating that this would be helpful for a student utilizing higher-order learning techniques to save time.
+- The biggest limitation of this approach, though, is that E has to be estimated. There are no known or mathematically proven E-values for specific higher-order and lower-order study methods. But as long as this approach is used with optimal conditions, this can be helpful with minimal risk.
+
+Because FSRS-6 now optimizes the user's forgetting curve, this is **no longer an effective approach**. **However, the issue of deciding what desired retention a user should use persists.**
 
 In the future, I hope to create a new program that can mathematically determine the best desired retention a user should use. 
 
