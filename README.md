@@ -71,6 +71,7 @@ This relationship also explains why E saved more time for lower desired retentio
     - This conversion is not completely perfect, since lowering desired retention would make certain long intervals much longer when trying to match the modified algorithm with its best unmodified equivalent.
     - E-value matching is best suited when E causes a low relative decrease and when the user desires a higher retention, from 85% to 95%.
     - Intervals within the modified algorithm were reasonable, saved time, and had low relative decreases for most E-values, indicating that this would be helpful for a student utilizing higher-order learning techniques to save time.
+    - The biggest limitation of this approach, though, is that E has to be estimated. There are no known or mathematically proven E-values for specific higher-order and lower-order study methods. But as long as this approach is used with optimal conditions, this can be helpful with minimal risk.
 - Because FSRS-6 now optimizes the user's forgetting curve, this is **no longer an effective approach**. **However, the issue of deciding what desired retention a user should use persists.**
 
 In the future, I hope to create a new program that can mathematically determine the best desired retention a user should use. 
