@@ -8,9 +8,9 @@ Spaced repetition algorithms like FSRS in Anki can adjust its parameters to suit
 This program tries to fix this issue by doing the following:
 1. modifying the decay constant in FSRS-5 to decrease forgetting curve speed by E% 
 IMAGE
-  - E represents the "effectiveness" of the user's encoding/study techniques. Research indicates that utilizing higher-order learning techniques that emphasize understanding relationships between concepts rather than isolated lower-order learning, such as interleaving and mind mapping (Lafleur and Kanazawa; Batdi; Firth et al.), can improve retention and reduce the decay rate of the forgetting curve.
+    - E represents the "effectiveness" of the user's encoding/study techniques. Research indicates that utilizing higher-order learning techniques that emphasize understanding relationships between concepts rather than isolated lower-order learning, such as interleaving and mind mapping (Lafleur and Kanazawa; Batdi; Firth et al.), can improve retention and reduce the decay rate of the forgetting curve.
 2. attempting to find which desired retention in the unmodified algorithm best matches with the desired retention in the modified algorithm
-  - the program does this by calculating error margins (how much the intervals deviate) between the original and modified algorithms for specific grade sequences
+    - the program does this by calculating error margins (how much the intervals deviate) between the original and modified algorithms for specific grade sequences
 
 ## How I collected the data for my spreadsheet, graphs, etc
 Data recorded on Google Sheet (LINK) for all combinations of these inputs:
