@@ -1,4 +1,4 @@
-# FSRS-Desired-Retention-Adjustment
+# FSRS-Desired-Retention-Adjuster
 This was a Science Fair project I made back in 11th grade on Anki's FSRS-5 algorithm. It got 1st place in the mathematics & systems software category at regionals, but it didn't place at state probably because of my bad presentation skills at the time.
 
 
