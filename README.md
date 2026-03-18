@@ -2,7 +2,7 @@
 This was a Science Fair project I made back in 11th grade on Anki's FSRS-5 algorithm. It got 1st place in the mathematics & systems software category at regionals, but it didn't place at state probably because of my bad presentation skills at the time.
 
 
-**IMPORTANT NOTE**: Many parts of this work is less useful now with FSRS-6 adding customizable forgetting curves, but the core problem persists.
+**IMPORTANT NOTE**: Many parts of this work are less useful now with FSRS-6 adding customizable forgetting curves, but the core problem persists.
 
 
 Spaced repetition algorithms like FSRS in Anki can adjust its parameters to suit the user's learning patterns, but there's no objective or mathematical way to determine what desired retention they should use.
