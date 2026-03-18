@@ -17,7 +17,7 @@ self.decay = baseDecay * (100 / (100 + E)) # E=0 would be original FSRS-5
 ```
 E represents the "effectiveness" of the user's encoding/study techniques. Research indicates that utilizing higher-order learning techniques that emphasize understanding relationships between concepts rather than isolated lower-order learning, such as interleaving and mind mapping (Lafleur and Kanazawa; Batdi; Firth et al.), can improve retention and reduce the decay rate of the forgetting curve.
 
-[Image: Bloom's Revised Taxonomy Pyramid](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot2.png)
+![Image: Bloom's Revised Taxonomy Pyramid](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot2.png)
 
 2. Attempting to find which desired retention in the unmodified algorithm best matches the desired retention in the modified algorithm:
     - The program does this by calculating error margins (how much the intervals deviate) between the original and modified algorithms for specific grade sequences.
@@ -33,12 +33,12 @@ Data recorded on Google Sheet ([LINK](https://github.com/Blue5GD/FSRS-Desired-Re
 
 So, in total, 450 combinations.
 
-[Image: Grade Sequences Table](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot3.png)
+![Image: Grade Sequences Table](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot3.png)
 
 ## Project Screenshots
 
-[Image: Main Program Console Interaction](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot4.png)
-[Image: Forgetting Curve Visualization](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot5.png)
+![Image: Main Program Console Interaction](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot4.png)
+![Image: Forgetting Curve Visualization](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot5.png)
 
 ## Results
 
@@ -50,13 +50,13 @@ So, in total, 450 combinations.
 4. Error margins and matched retention were mostly consistent no matter what sequence was used to match the algorithms (see Figure 15).
 5. Rough estimates of E-value to desired retention decrease are shown in Figure 16.
 
-[Image: Data Charts and Figures](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot6.png)
+![Image: Data Charts and Figures](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot6.png)
 
 **Why was there more deviation as desired retention decreased, and as E increased?**
 
 In FSRS-5, the formula for the next scheduled interval is:
 
-[Image: FSRS Formula](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot7.png)
+![Image: FSRS Formula](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot7.png)
 
 Because \(1/decay\) is a negative exponent, the function becomes more sensitive to change when \(r\) is smaller.
 
