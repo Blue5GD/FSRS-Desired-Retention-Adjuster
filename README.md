@@ -2,82 +2,135 @@
 
 # FSRS-Desired-Retention-Adjuster
 
-This was a Science Fair project I made back in 11th grade on Anki's FSRS-5 algorithm. It got 1st place in the mathematics & systems software category at regionals, but it didn't place at state, probably because of my poor presentation skills at the time.
+This was a science fair project I made in 11th grade to investigate Anki's FSRS-5 spaced repetition algorithm. It won 1st place in the Mathematics & Systems Software category at the Greater New Orleans regional competition.
 
-**IMPORTANT NOTE**: Many parts of this work are less useful now with FSRS-6 adding customizable forgetting curves, but the core problem persists.
+>**Note**: This project is specifically based on FSRS-5. Since then, newer versions of FSRS have made the forgetting curve itself trainable, so parts of this project are no longer as applicable to current versions. However, the question of how a user should choose their desired retention still remains relevant.
 
-Spaced repetition algorithms like FSRS in Anki can adjust their parameters to suit the user's learning patterns, but there's no objective or mathematical way to determine what desired retention they should use.
+## Background and Research Question
 
-This program tries to fix this issue by doing the following:
+Spaced repetition algorithms like FSRS adjust review intervals based on how likely you are to remember a card. One of the settings users can choose is **desired retention**, which is the target probability of recalling a card when it is due.
 
-1. Modifying the decay constant in FSRS-5 to decrease the forgetting curve speed by E%:
+I was interested in whether improvements in how a person learns or encodes information, which are believed to slow memory decay, could be represented in FSRS-5.
+
+To investigate this, I modified the decay rate in FSRS-5 by introducing an additional parameter, `E`, and then searched for the desired-retention value in the original FSRS-5 algorithm that most closely resembled the modified curve.
+
+In other words, the main question of this project was: **Can a change in the memory decay rate be approximated by simply changing desired retention?**
+
+## How It Works
+
+FSRS-5 uses a forgetting curve to estimate retrievability, or the probability that a card can still be recalled after a certain amount of time.
+
+The relevant part of the FSRS-5 model can be represented as:
+
+$$
+R(t,S) = \left(1 + \frac{19}{81}\frac{t}{S}\right)^{-\text{decay}}
+$$
+
+where:
+
+* `R` is retrievability
+* `t` is the time since the last review
+* `S` is memory stability
+* `decay` controls how quickly retrievability decreases
+
+I implemented the relevant FSRS-5 equations in Python and added an `E` parameter that reduces the rate of decay:
 
 ```python
-self.decay = baseDecay * (100 / (100 + E)) # E=0 would be original FSRS-5
+self.decay = baseDecay * (100 / (100 + E))
 ```
-E represents the "effectiveness" of the user's encoding/study techniques. Research indicates that utilizing higher-order learning techniques that emphasize understanding relationships between concepts rather than isolated lower-order learning, such as interleaving and mind mapping (Lafleur and Kanazawa; Batdi; Firth et al.), can improve retention and reduce the decay rate of the forgetting curve.
 
-![Image: Bloom's Revised Taxonomy Pyramid](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot2.png)
+An `E` value of `0` produces the original FSRS-5 decay rate. Larger `E` values represent a hypothetical improvement in memory retention and therefore produce a slower forgetting curve.
 
-2. Attempting to find which desired retention in the unmodified algorithm best matches the desired retention in the modified algorithm:
-    - The program does this by calculating error margins (how much the intervals deviate) between the original and modified algorithms for specific grade sequences.
+The program then compares the modified FSRS-5 schedule with the original algorithm and searches for the desired-retention value that produces the closest match. The difference between schedules is measured by the percentage deviation between their corresponding review intervals.
 
-There is also a secondary visualizer program that outputs exact review intervals, calculates the % time the E-value saved, and graphs the forgetting curves of both algorithms.
+## Experimental Setup
 
-## How I collected the data for my spreadsheet, graphs, etc.
+I collected data for every combination of:
 
-Data recorded on Google Sheet ([LINK](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/Anki%20Spreadsheet.xlsx)) for all combinations of these inputs:
-- Desired retention from 75%-95% (steps of 5)
-- Various E-values from 0-200 (0, 5, 10, 15, 25, 50, 75, 100, 125, 150, 200, [10 total])
-- 9 grade sequences to reflect a variety of possible Anki inputs (see image below)
+* **5 desired-retention values:** 75%, 80%, 85%, 90%, and 95%
+* **11 E-values:** 0, 5, 10, 15, 25, 50, 75, 100, 125, 150, and 200
+* **9 review sequences** representing different possible Anki review histories
 
-So, in total, 450 combinations.
+This produced **495 experimental conditions**.
 
-![Image: Grade Sequences Table](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot3.png)
+The experimental data is available in [`Anki Spreadsheet.xlsx`](Anki%20Spreadsheet.xlsx).
 
-## Project Screenshots
+**Grade Sequences Used:**
 
-![Image: Main Program Console Interaction](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot4.png)
-![Image: Forgetting Curve Visualization](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot5.png)
+![Grade Sequences Table](screenshots/screenshot3.png)
 
 ## Results
 
-(Copy and pasted from my Science Fair board)
+My main observations from the experiments were:
 
-1. The % time E-values saved varied depending on the grade sequence but were generally slightly higher or lower than E%. As desired retention lowered, this % progressively increased (see Figure 11).
-2. The matched FSRS-5 and modified FSRS-5 algorithms tended to deviate more as E increased, and more as desired retention decreased (see Figures 13 and 14).
-3. There were a total of 43 sequences (out of 450 total) where high E-values, in 75% and 80% retention, matched a desired retention below 70%. In Anki, you cannot set desired retention below 70% (see Figure 12).
-4. Error margins and matched retention were mostly consistent no matter what sequence was used to match the algorithms (see Figure 15).
-5. Rough estimates of E-value to desired retention decrease are shown in Figure 16.
+1. The percentage of time saved by an `E` value varied depending on the review sequence, but was generally somewhat higher or lower than the value of `E` itself. This difference became larger as desired retention decreased.
 
-![Image: Data Charts and Figures](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot6.png)
+2. The similarity between the modified and original FSRS-5 schedules depended on both the `E` value and desired retention. In general, larger `E` values and lower desired-retention values produced greater deviations.
 
-**Why was there more deviation as desired retention decreased, and as E increased?**
+3. The matched desired-retention values and error margins were relatively consistent across different review sequences.
 
-In FSRS-5, the formula for the next scheduled interval is:
+4. Based on the results, I was able to produce rough estimates for converting an `E` value into an equivalent decrease in desired retention.
 
-![Image: FSRS Formula](https://github.com/Blue5GD/FSRS-Desired-Retention-Adjuster/blob/main/screenshots/screenshot7.png)
+![Data Charts and Figures](screenshots/screenshot6.png)
 
-Because \(1/decay\) is a negative exponent, the function becomes more sensitive to change when \(r\) is smaller.
+## Why Does the Deviation Increase?
 
-Example: When \(E=0\), for \(r = 0.9\), \(r^{-2} \approx 1.23\); for \(r = 0.8\), \(r^{-2} \approx 1.56\).
-But when \(E=100\), for \(r = 0.9\), \(r^{-4} \approx 1.52\); for \(r = 0.8\), \(r^{-4} \approx 2.44\).
-\(r\) is approximately 2.79 times more sensitive when \(E=100\).
+The FSRS-5 scheduling formula contains a negative exponent involving the decay parameter. As desired retention decreases, the calculated interval becomes more sensitive to changes in the decay rate.
 
-This relationship also explains why E saved more time for lower desired retentions and less for higher desired retentions.
+For example, using the simplified form of the scheduling equation:
 
-## Conclusion (and future implications with FSRS-6)
+* With `E = 0`, changing retention from `r = 0.9` to `r = 0.8` produces a relatively small change.
+* With `E = 100`, the increased effect of the decay adjustment makes the same change in `r` produce a much larger difference.
 
-Because there was minimal deviation between the modified FSRS-5 algorithm and the matched unmodified FSRS-5 algorithm under optimal conditions, this suggests that this is an **accurate approach** to account for higher-order learning in FSRS-5 without modifying the core algorithm.
+This helps explain two of the patterns I observed:
 
-- The low standard deviation between matched retention and error margins suggests there is a clear way to convert the modified FSRS-5 with E to the unmodified FSRS-5 with lower retention.
-- This conversion is not completely perfect, since lowering desired retention would make certain long intervals much longer when trying to match the modified algorithm with its best unmodified equivalent.
-- E-value matching is best suited when E causes a low relative decrease and when the user desires a higher retention, from 85% to 95%.
-- Intervals within the modified algorithm were reasonable, saved time, and had low relative decreases for most E-values, indicating that this would be helpful for a student utilizing higher-order learning techniques to save time.
-- The biggest limitation of this approach, though, is that E has to be estimated. There are no known or mathematically proven E-values for specific higher-order and lower-order study methods. But as long as this approach is used with optimal conditions, this can be helpful with minimal risk.
+* Larger `E` values caused the schedules to diverge more from the original algorithm.
+* The effect of `E` was larger at lower desired-retention values.
 
-Because FSRS-6 now optimizes the user's forgetting curve, this is **no longer an effective approach**. **However, the issue of deciding what desired retention a user should use persists.**
+## Conclusion
 
-In the future, I hope to create a new program that can mathematically determine the best desired retention a user should use.
+Under the conditions where the two schedules matched most closely, the modified FSRS-5 algorithm could often be approximated by using a lower desired-retention value in the original algorithm.
 
-But for now... PEACE
+This suggests that, for FSRS-5, changing the decay rate did not always require modifying the scheduling algorithm itself if a sufficiently close desired-retention value could be found.
+
+However, the conversion was not perfect. Some combinations produced significantly larger errors, particularly with larger `E` values and lower desired-retention values. The approach also depends on estimating an appropriate `E` value, and I did not have a mathematically established way to assign specific `E` values to particular study techniques.
+
+The results therefore suggest a possible relationship between memory decay and desired retention, rather than providing a universal conversion.
+
+## Project Screenshots
+
+### Main Program
+
+![Main Program Console Interaction](screenshots/screenshot4.png)
+
+### Forgetting Curve Visualizer
+
+![Forgetting Curve Visualization](screenshots/screenshot5.png)
+
+The project also includes a separate visualizer that displays the forgetting curves and review intervals produced by the two algorithms.
+
+## Running the Project
+
+### Requirements
+
+* Python 3
+* NumPy
+* Matplotlib
+
+Install the required packages:
+
+```bash
+pip install numpy matplotlib
+```
+
+Run the experimenter:
+
+```bash
+python main.py
+```
+
+Run the visualizer:
+
+```bash
+python visualizer.py
+```
