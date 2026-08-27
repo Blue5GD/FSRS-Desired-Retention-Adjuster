@@ -134,3 +134,7 @@ Run the visualizer:
 ```bash
 python visualizer.py
 ```
+
+## References
+
+The sources used for the project's literature review and mathematical implementation are listed in [`References.txt`](references.txt).
